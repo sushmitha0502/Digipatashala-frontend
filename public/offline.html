@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - E-Learning Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .offline-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+        .retry-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .retry-btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="offline-icon">📱</div>
+        <h1>You're Offline</h1>
+        <p>Don't worry! You can still access your downloaded learning materials and complete assignments.</p>
+        <p>Your progress will be synced when you're back online.</p>
+        <button class="retry-btn" onclick="window.location.reload()">Try Again</button>
+    </div>
+
+    <script>
+        // Check for online status
+        function checkOnline() {
+            return navigator.onLine;
+        }
+
+        // Auto-retry when back online
+        window.addEventListener('online', function() {
+            window.location.reload();
+        });
+
+        // Show cached content if available
+        if ('caches' in window) {
+            caches.open('e-learning-cache-v1').then(function(cache) {
+                // Load cached learning materials
+                return cache.keys();
+            }).then(function(requests) {
+                // Display available offline content
+                console.log('Available offline content:', requests);
+            });
+        }
+    </script>
+</body>
+</html>
